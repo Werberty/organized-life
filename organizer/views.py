@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.views import APIView, Response
+from rest_framework.permissions import IsAuthenticated
 from organizer.models import Tasks
 
 from organizer.serializers import CardSerializer, TasksSerializer
@@ -16,6 +17,8 @@ class CardAPI(APIView):
     
 
 class TasksAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request):
         serializer = TasksSerializer(data=request.data)
         if serializer.is_valid():
